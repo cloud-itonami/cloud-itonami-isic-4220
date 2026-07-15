@@ -1,0 +1,42 @@
+{:itonami.blueprint/id "cloud-itonami-4220"
+ :itonami.blueprint/name "Construction of Utility Projects"
+ :itonami.blueprint/isic-rev5 "4220"
+ :itonami.blueprint/domain :construction/utility-projects
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:worker-safety :public-utility-reliability :buried-infrastructure-protection]
+ :itonami.blueprint/governor :utility-construction-governor
+ :itonami.blueprint/robotics false
+ :itonami.blueprint/required-technologies [:identity :forms :audit-ledger :notifications]
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented
+ :itonami.blueprint/implemented-slice
+ "`:utility-construction-governor` is implemented end-to-end in
+ `src/utilconstr` as a UTILITY-CONSTRUCTION-PROJECT OPERATIONS
+ COORDINATION actor -- Utility-Construction Advisor (LLM proposal-only) ⊣
+ Utility-Construction Governor (closed-op-allowlist / site-verification /
+ utility-locate / notification-lead-time / unresolved-concern hard-gates).
+ Deliberately narrower in authority than the `cloud-itonami-isic-4211`
+ (construction) robotics-premise reference this actor follows
+ structurally, the SAME coordination-only shape as the siblings
+ `cloud-itonami-isic-4311` (demolition) and `cloud-itonami-isic-4210`
+ (roads/railways, the closest sibling -- water/sewer/gas/electric/telecom
+ trenching and pipe/cable laying share the SAME excavation/utility-strike
+ legal exposure this actor's `utilconstr.facts` catalog is grounded in):
+ `:itonami.blueprint/robotics` is honestly `false` here -- this actor
+ holds NO heavy-equipment-control authority and NO utility-tie-in/
+ energization-authorization authority (both are HARD, permanent governor
+ blocks, never overridable by human approval -- see `utilconstr.governor`
+ ns docstring). Every one of its four proposal ops (`:log-site-record` /
+ `:schedule-construction-operation` / `:flag-safety-concern` /
+ `:order-supplies`) carries `:effect :propose` ONLY -- the governor
+ HARD-holds any proposal that doesn't (`effect-not-propose-violations`), a
+ structural invariant distinguishing this actor from siblings that DO
+ commit real-world actuation effects. Per-jurisdiction {JPN/USA/DEU}
+ utility-strike-prevention/road-opening-notification legal-basis catalog
+ (`utilconstr.facts`) with real official sources, and mail+phone
+ (Resend+Twilio) safety-concern notification (`utilconstr.notify`) to the
+ site's licensed-utility-engineer/site-supervisor/utility-authority
+ contact roster. `:flag-safety-concern` and `:schedule-construction-
+ operation` ALWAYS escalate to a human, at every phase, unconditionally.
+ See `docs/` -- README `Actuation` section -- for the full governor-check
+ enumeration and the rationale for each hard/soft rule."}
