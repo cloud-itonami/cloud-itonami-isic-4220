@@ -16,6 +16,14 @@
   (is (= :qualitative (:threshold-model (facts/spec-basis "DEU"))))
   (is (nil? (:notification-lead-hours (facts/spec-basis "DEU")))))
 
+(deftest gbr-has-a-spec-basis
+  (is (some? (facts/spec-basis "GBR")))
+  (is (string? (:utility-locate-provenance (facts/spec-basis "GBR")))))
+
+(deftest gbr-is-honestly-qualitative-not-fabricated
+  (is (= :qualitative (:threshold-model (facts/spec-basis "GBR"))))
+  (is (nil? (:notification-lead-hours (facts/spec-basis "GBR")))))
+
 (deftest unknown-jurisdiction-has-no-fabricated-spec-basis
   (is (nil? (facts/spec-basis "ATL"))))
 
@@ -39,6 +47,10 @@
 (deftest deu-never-gets-a-fabricated-true-false
   (is (= :qualitative (facts/notification-lead-insufficient? "DEU" {:notification-lead-hours-actual 1000})))
   (is (= :qualitative (facts/notification-lead-insufficient? "DEU" {:notification-lead-hours-actual 0}))))
+
+(deftest gbr-never-gets-a-fabricated-true-false
+  (is (= :qualitative (facts/notification-lead-insufficient? "GBR" {:notification-lead-hours-actual 1000})))
+  (is (= :qualitative (facts/notification-lead-insufficient? "GBR" {:notification-lead-hours-actual 0}))))
 
 (deftest unknown-jurisdiction-returns-nil-not-a-guess
   (is (nil? (facts/notification-lead-insufficient? "ATL" {:notification-lead-hours-actual 1000}))))
@@ -72,6 +84,15 @@
     (is (re-find #"eur-lex\.europa\.eu" (:utility-locate-provenance sb)))
     (is (re-find #"StVO|Straßenverkehrs-Ordnung" (:traffic-control-basis sb)))
     (is (re-find #"gesetze-im-internet\.de" (:traffic-control-provenance sb)))))
+
+(deftest gbr-cites-real-cdm-and-nrswa-law
+  (let [sb (facts/spec-basis "GBR")]
+    (is (re-find #"Construction \(Design and Management\) Regulations 2015" (:utility-locate-basis sb)))
+    (is (re-find #"legislation\.gov\.uk/uksi/2015/51" (:utility-locate-provenance sb)))
+    (is (re-find #"New Roads and Street Works Act 1991" (:traffic-control-basis sb)))
+    (is (re-find #"legislation\.gov\.uk/ukpga/1991/22" (:traffic-control-provenance sb)))
+    (is (re-find #"section 54" (:permit-basis sb)))
+    (is (re-find #"legislation\.gov\.uk/ukpga/1991/22" (:permit-provenance sb)))))
 
 (deftest uncovered-jurisdiction-has-no-fabricated-catalog-entry
   (is (nil? (facts/spec-basis "ATL"))))
