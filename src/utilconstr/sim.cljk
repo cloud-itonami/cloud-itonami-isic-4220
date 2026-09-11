@@ -1,5 +1,5 @@
 (ns utilconstr.sim
-  "Demo driver -- `clojure -M:dev:run`. Walks utility-line construction
+  "Demo driver -- `kbb -M:dev:run`. Walks utility-line construction
   sites through a full coordination episode, exercising every governor
   check: log a site record (auto-commits) -> propose a construction-
   operation schedule (escalates, human approves) -> flag a safety concern
