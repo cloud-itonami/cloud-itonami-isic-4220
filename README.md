@@ -94,7 +94,7 @@ coordination-only authority as described above.
 | `:flag-safety-concern` | surface a utility-strike / excavation-collapse / gas-leak concern | Drafts a safety-concern flag; ALWAYS escalates to a human, unconditionally. Once approved, `utilconstr.notify` sends the notice (mail + phone) to the site's licensed-utility-engineer/site-supervisor/utility-authority contact roster. |
 | `:order-supplies` | pipe/cable/equipment procurement proposal | Drafts a supply-order proposal. Escalates above a cost threshold or below the confidence floor; may auto-commit at phase 3 otherwise. |
 
-**Legal basis is data, not code** -- `src/utilconstr/facts.cljc`'s
+**Legal basis is data, not code** -- `src/utilconstr/facts.cljk`'s
 `catalog` is the per-jurisdiction EDN source-of-truth the governor checks
 every `:schedule-construction-operation` proposal against (JPN/USA/DEU
 seeded; DEU stands in for the EU, the same convention
